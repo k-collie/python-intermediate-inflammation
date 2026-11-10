@@ -5,7 +5,7 @@ import numpy as np
 from inflammation import models, views
 
 
-def analyse_data(data_source: models.CSVDataSource):
+def analyse_data(data_source: models.AbstractDataSource):
     """Calculates the standard deviation by day between datasets.
 
     Gets all the inflammation data from CSV files within a directory,

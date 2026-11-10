@@ -8,6 +8,20 @@ from inflammation import models, views
 from inflammation.compute_data import analyse_data
 
 
+def select_data_source(first_infile) -> models.AbstractDataSource:
+    """
+    Select a data source based on the first input file's extension
+    """
+    _, extension = os.path.splitext(first_infile)
+    print(first_infile)
+    if extension == '.json':
+      return models.JSONDataSource(os.path.dirname(first_infile))
+    elif extension == '.csv':
+      return models.CSVDataSource(os.path.dirname(first_infile))
+    else:
+      raise ValueError(f'Unsupported data file format: {extension}')
+
+
 def main(args):
     """The MVC Controller of the patient inflammation data system.
 
@@ -21,7 +35,7 @@ def main(args):
 
 
     if args.full_data_analysis:
-        data_source = models.CSVDataSource(os.path.dirname(infiles[0]))
+        data_source = select_data_source(infiles[0])
         analyse_data(data_source)
         return
 
