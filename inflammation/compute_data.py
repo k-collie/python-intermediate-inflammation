@@ -22,3 +22,11 @@ def analyse_data(data_source: models.AbstractDataSource):
         "standard deviation by day": daily_standard_deviation,
     }
     views.visualize(graph_data)
+
+
+def compute_standard_deviation_by_day(data):
+    means_by_day = map(models.daily_mean, data)
+    means_by_day_matrix = np.stack(list(means_by_day))
+
+    daily_standard_deviation = np.std(means_by_day_matrix, axis=0)
+    return daily_standard_deviation
